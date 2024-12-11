@@ -1,0 +1,22 @@
+#define PH_SENSOR_PIN A0
+#define MOISTURE_SENSOR_PIN A1
+#define TEMP_SENSOR_PIN A2
+
+void setup() {
+  Serial.begin(9600);
+}
+
+void loop() {
+  int phValue = analogRead(PH_SENSOR_PIN);
+  int moistureValue = analogRead(MOISTURE_SENSOR_PIN);
+  int tempValue = analogRead(TEMP_SENSOR_PIN);
+
+  Serial.print("pH Value: ");
+  Serial.println(phValue);
+  Serial.print("Moisture: ");
+  Serial.println(moistureValue);
+  Serial.print("Temperature: ");
+  Serial.println(tempValue);
+
+  delay(2000);
+}
