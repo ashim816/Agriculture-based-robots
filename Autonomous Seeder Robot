@@ -1,0 +1,21 @@
+#define SEED_PIN 9  // Actuator control pin
+#define SOIL_SENSOR_PIN A0  // Soil moisture sensor
+int soilMoisture;
+
+void setup() {
+  pinMode(SEED_PIN, OUTPUT);
+  pinMode(SOIL_SENSOR_PIN, INPUT);
+  Serial.begin(9600);
+}
+
+void loop() {
+  soilMoisture = analogRead(SOIL_SENSOR_PIN);
+  Serial.println(soilMoisture);
+
+  if (soilMoisture > 500) {  // Optimal soil moisture for planting
+    digitalWrite(SEED_PIN, HIGH);  // Activate seed planting actuator
+  } else {
+    digitalWrite(SEED_PIN, LOW);  // Deactivate actuator if soil is dry
+  }
+  delay(1000);
+}
