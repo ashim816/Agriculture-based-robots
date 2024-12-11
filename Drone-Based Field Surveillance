@@ -1,0 +1,10 @@
+import dronekit
+from dronekit import connect
+
+vehicle = connect('127.0.0.1:14551', wait_ready=True)
+
+def fly_mission():
+    vehicle.simple_goto(dronekit.LocationGlobalRelative(37.7749, -122.4194, 10))
+    print("Flying to waypoint")
+
+fly_mission()
