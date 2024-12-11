@@ -1,0 +1,22 @@
+int soilMoisturePin = A0;  // Soil sensor input
+int pumpPin = 9;            // Water pump control
+int soilMoistureValue;
+
+void setup() {
+  pinMode(soilMoisturePin, INPUT);
+  pinMode(pumpPin, OUTPUT);
+  Serial.begin(9600);
+}
+
+void loop() {
+  soilMoistureValue = analogRead(soilMoisturePin);
+  Serial.print("Soil Moisture: ");
+  Serial.println(soilMoistureValue);
+
+  if (soilMoistureValue < 400) {
+    digitalWrite(pumpPin, HIGH);  // Activate pump
+  } else {
+    digitalWrite(pumpPin, LOW);   // Deactivate pump
+  }
+  delay(2000);
+}
