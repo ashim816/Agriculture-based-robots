@@ -1,0 +1,30 @@
+import cv2
+import numpy as np
+
+# Load pre-trained model (for example, to detect leaf diseases)
+model = cv2.dnn.readNetFromONNX('crop_model.onnx')
+
+# Setup video capture for live feed from the camera
+cap = cv2.VideoCapture(0)
+
+while True:
+    ret, frame = cap.read()
+    if not ret:
+        break
+    
+    # Preprocess the image for model
+    blob = cv2.dnn.blobFromImage(frame, 1/255, (416, 416), (0, 0, 0), swapRB=True, crop=False)
+    model.setInput(blob)
+    output = model.forward()
+
+    # Logic to detect anomalies (e.g., crop diseases)
+    for detection in output:
+        if detection[4] > 0.5:  # Confidence threshold
+            cv2.putText(frame, "Disease Detected", (50, 50), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 0, 255), 2)
+
+    cv2.imshow('Crop Monitoring', frame)
+    if cv2.waitKey(1) & 0xFF == ord('q'):
+        break
+
+cap.release()
+cv2.destroyAllWindows()
